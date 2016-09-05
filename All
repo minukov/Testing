@@ -1,0 +1,249 @@
+TRAINER
+1
+
+2
+function getRandomInt(min, max)
+{
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getNum (mes,num) {
+ var temp = num;
+ while (isNaN(temp) || temp < 1 || temp > 11) {
+  temp = prompt(mes);
+  temp  = parseInt(temp,10);
+ }
+ return temp;
+}
+var start = getRandomInt(1,10);
+console.log('start = ', start);
+
+var stop = getNum('Введите число от 1 до 10. Или 11 для выхода.',-1);
+var flag = false;
+
+do {
+	if (start == stop) {
+    	alert('Вы выиграли! Мы загадали '+start);
+        flag = true;
+    }
+ 	else if (stop == 11) {
+     	alert('Пока!');
+        flag = true;
+    }
+ 	else if (start > stop) { 	
+    	stop = getNum('Мы загадали число больше ' + stop,-1);
+        stop = getNum('Введите число от 1 до 10. Или 11 для выхода.',stop);
+	} 
+	else if (start < stop) { 	
+    	stop = getNum('Мы загадали число меньше ' + stop,-1);
+        stop = getNum('Введите число от 1 до 10. Или 11 для выхода.',stop);
+	} 
+
+ } while (!flag);
+ 
+PRE JUNIOR
+
+1
+var where = ["red","white","blue", "red"];
+var what = ["red"];
+
+//var where = ["red","white","blue","red","white","blue","blue","red", "blue", "white"];
+//var what = ["red","blue"];
+
+function contains (what,where) {
+	var i, l = where.length,
+    	j , wl = what.length,
+    	result = 1;
+    if (wl == 0) return true;
+    for (i = 0; i < l; i++) {
+    	if (where[i] == what[0]) {
+        	j = 1;
+            for (; j < wl; j++) {
+            	if (what[j] == where[i+j]) {
+                	result++;
+                } else {
+                	result = 1;
+                    i = i+j;
+                    break;
+                }
+            }
+            if (result == what.length) {
+            	console.log('i = ', i);
+            	return true;
+            }
+        }
+    }
+    return false;
+}
+console.log('result = ', contains (what,where));
+
+2
+????????????????????? массивоподобный обьект
+var arr = [1,2,3,4,5,6,7];
+
+function extractOddItems (arr) {
+	var i, l = arr.length,    	
+    	result = [];
+    for (i = 0; i < l; i++) {
+    	if (i%2 != 0) {
+        	result.push(arr[i]);
+        }
+    }
+    return result;
+}
+console.log('result = ', extractOddItems (arr));
+
+3 совпадает с 4
+4
+//var keys = ['1','2','3','4','5','6','7'];
+//var values = ['10','20','30','40','50','60','70'];
+
+//var keys = ['1','2','3','4','5','6'];
+//var values = ['10','20','30','40','50','60','70'];
+
+var keys = ['1','2','3','4','5','6', '7'];
+var values = ['10','20','30','40','50','60'];
+
+function createObject (keys, values) {
+	var i, l = keys.length,    	
+    	result = {};
+    for (i = 0; i < l; i++) {
+    	result[keys[i]] = values[i];        
+    }
+    return result;
+}
+console.log('result = ', createObject (keys, values));
+
+5
+var data = [1,2,3,4,5,6,7,8,9];
+var rowSize = 3;
+
+function toMarix (data, rowSize) {
+	var j = 1, i, l = data.length, temp = []
+    	result = [];
+    for (i = 0; i < l; i++) {
+    	temp[j-1] = data[i];
+    	if (j == rowSize) {        	
+            result.push(temp);
+            j = 0;
+            temp = [];
+        }      	
+        j++;        
+    }
+    if (temp.length > 0) result.push(temp);
+    return result;
+}
+console.log('result = ', toMarix (data, rowSize));
+
+6
+var obj = {1:10,2:20,3:30,4:40,5:50,6:60,7:70,8:80,9:90};
+
+function toQueryString (obj) {
+	var result = '';
+    for (var key in obj) {
+    	if (obj.hasOwnProperty(key)) {
+        	result += obj[key]+',';
+        }
+    }    
+    return result.substring(0,result.length-1);
+}
+console.log('result = ', toQueryString (obj));
+
+7
+??????????????? проверять ли типы входных аргументов
+// берем из  П.1
+function contains (what,where) {
+	var i, l = where.length,
+    	j , wl = what.length,
+    	result = 1;
+    if (wl == 0) return true;
+    for (i = 0; i < l; i++) {
+    	if (where[i] == what[0]) {
+        	j = 1;
+            for (; j < wl; j++) {
+            	if (what[j] == where[i+j]) {
+                	result++;
+                } else {
+                	result = 1;
+                    i = i+j;
+                    break;
+                }
+            }
+            if (result == what.length) {
+            	console.log('i = ', i);
+            	return true;
+            }
+        }
+    }
+    return false;
+}
+function isInArray () {
+    var i, l = arguments.length-1, what = [],
+	    where = arguments[l];
+	if (Object.prototype.toString.call(where) != '[object Array]') {
+    	return false;
+	}
+    
+    for (i=0; i<l; i++) {
+    	what.push(arguments[i]);
+    }
+    return contains (what,where);
+}
+console.log('result = ', isInArray(1,2,3,4,5,[0,1,2,3,4,5,6,7,8,9]));
+
+8
+?????????? массив это обьект у которого имена ключей 0,1,2...
+?????????? без рекурссии для вложеных обьектов
+function extend () {
+    var i, l = arguments.length, arg,
+	    key, obj = {};
+        
+    for (i=0; i<l; i++) {
+		arg = arguments[i];
+        if (arg !== null && typeof arg === 'object') {
+        	for (key in arg) {
+            	obj[key] = arg[key];
+            }
+        }
+    }
+    return obj;
+}
+console.log('result = ', extend(1,{1:10,2:20},[1,2,3,4,5],{3:30,2:40},'string',null,true));
+
+9
+function test(value,index,array) {
+	console.log('arguments = ',arguments);
+    return (index%2==0);
+}
+var arr = [1,2,3,4,5,6,7,8],
+    func = test;
+    
+function every (arr,func) {
+    var i, l = arr.length, result = true;
+        
+    for (i=0; i<l; i++) {
+		result = func(arr[i],i,arr) && result;
+    }
+    return result;
+}
+console.log('result = ', every (arr,func));
+
+10
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+    
+function sum () {
+    var i, l = arguments.length,
+        arg, result = 0;
+        
+    for (i=0; i<l; i++) {
+    	arg = arguments[i];
+		if (isNumeric(arg)) {
+        	console.log('arg = ', arg);
+        	result += Number(arg);
+        }
+    }
+    return result;
+}
+console.log('result = ', sum (1,2,3,[4,5,6],{a:7,b:8},'9.5','-9,89','str',false));
