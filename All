@@ -92,14 +92,16 @@ console.log('result = ', contains(what,where));
 */
 ????????????????????? массивоподобный обьект
 var arr = [1,2,3,4,5,6,7];
+//var arr = '123456';
 
 function extractOddItems (arr) {
-	var i, l = arr.length,    	
+	var i, l = arr.length,
     	result = [];
     for (i = 0; i < l; i++) {
-    	if (i%2 != 0) {
-        	result.push(arr[i]);
-        }
+      if (i%2 === 0) {
+          continue;
+      }
+      result.push(arr[i]);
     }
     return result;
 }
