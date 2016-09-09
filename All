@@ -60,40 +60,31 @@ PRE JUNIOR
 
 1/*
 Написать функцию contains. (время выполнения 15 - 45  минут)
-Если элементы массива what содержатся в массиве where, функция должна       возвращать true иначе false. Пустой массив является подмножеством любого массива.
+Если элементы массива what содержатся в массиве where, функция должна
+возвращать true иначе false. Пустой массив является подмножеством любого массива.
 */
-var where = ["red","white","blue", "red"];
-var what = ["red"];
-
-//var where = ["red","white","blue","red","white","blue","blue","red", "blue", "white"];
-//var what = ["red","blue"];
+// порядок следования элементов в массивах не важен
+console.clear();
+var where = ["red", "green", "blue", "white", "green", "blue", "red"];
+var what = ["blue", "green", "yellow"];
 
 function contains (what,where) {
-	var i, l = where.length,
-    	j , wl = what.length,
-    	result = 1;
-    if (wl == 0) return true;
-    for (i = 0; i < l; i++) {
-    	if (where[i] == what[0]) {
-        	j = 1;
-            for (; j < wl; j++) {
-            	if (what[j] == where[i+j]) {
-                	result++;
-                } else {
-                	result = 1;
-                    i = i+j;
-                    break;
-                }
-            }
-            if (result == what.length) {
-            	console.log('i = ', i);
-            	return true;
-            }
-        }
-    }
-    return false;
+  var  wl = what.length;
+  
+  if (wl === 0) {
+  	return true;
+  }
+  
+  for (var i = 0; i < wl; i++) {
+    if (where.indexOf(what[i]) === -1) {
+      return false;
+    }    
+  }
+  
+  return true;
 }
-console.log('result = ', contains (what,where));
+
+console.log('result = ', contains(what,where));
 
 2/*
 Создай функцию extractOddItems(arr) (время выполнения 15 - 45 минут)
