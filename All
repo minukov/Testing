@@ -1,61 +1,50 @@
 TRAINER
+
 1/*
 Задать такие b, для которых логические выражения будут возвращать значение, описанное в комментарии рядом (15 минут)
 */
 var b1 = true;
-true && b1; // -> true
+	true && b1; // -> true
 var b2 = false;
-!'Hey there' || b2; // -> false
+	!'Hey there' || b2; // -> false
 var b3 = false;
-0 || !b3 && true; // -> true
+	0 || !b3 && true; // -> true
 var b4 = false;
-!10 && !(b4 || false); // -> false
+	!10 && !(b4 || false); // -> false
 var b5 = true;
-!(null && undefined) && (![] || b5); // -> true
+	!(null && undefined) && (![] || b5); // -> true
 
 2/*
 Написать отгадывайку чисел. ( время выполнения 1 час, цель проверить понимание условных конструкций и написание простейшего скрипта)
-Пользователь вводит целое число от 1 до 10, пытаясь угадать загаданное число. Программа выдает сообщения в следующих случаях: когда пользователь отказался от ввода (esc, отмена) когда пользователь ввел некорректное значение (то есть не число, число не указанное в диапазоне) когда пользователь не угадал загаданное число когда пользователь угадал загаданное число Загаданное число не обязательно должно меняться при новом запуске программы. Запрос данных у пользователя - prompt(str), где str - текст сообщения всплывшего окна Преобразование строки в число - parseInt(str, 10) . Не усложнять программу , циклической обрабокой. Использовать только лишь условные конструкции. Проход скрипта , для упрощения, один.
+Пользователь вводит целое число от 1 до 10, пытаясь угадать загаданное число.
+Программа выдает сообщения в следующих случаях:
+когда пользователь отказался от ввода (esc, отмена)
+когда пользователь ввел некорректное значение (то есть не число, число не указанное в диапазоне)
+когда пользователь не угадал загаданное число
+когда пользователь угадал загаданное число
+Загаданное число не обязательно должно меняться при новом запуске программы.
+Запрос данных у пользователя - prompt(str), где str - текст сообщения всплывшего окна
+Преобразование строки в число - parseInt(str, 10) . 
+Не усложнять программу , циклической обрабокой. 
+Использовать только лишь условные конструкции. Проход скрипта, для упрощения, один.
 */
-function getRandomInt(min, max)
-{
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function getNum (mes,num) {
- var temp = num;
- while (isNaN(temp) || temp < 1 || temp > 11) {
-  temp = prompt(mes);
-  temp  = parseInt(temp,10);
- }
- return temp;
-}
-var start = getRandomInt(1,10);
-console.log('start = ', start);
-
-var stop = getNum('Введите число от 1 до 10. Или 11 для выхода.',-1);
-var flag = false;
-
-do {
-	if (start == stop) {
-    	alert('Вы выиграли! Мы загадали '+start);
-        flag = true;
-    }
- 	else if (stop == 11) {
-     	alert('Пока!');
-        flag = true;
-    }
- 	else if (start > stop) { 	
-    	stop = getNum('Мы загадали число больше ' + stop,-1);
-        stop = getNum('Введите число от 1 до 10. Или 11 для выхода.',stop);
-	} 
-	else if (start < stop) { 	
-    	stop = getNum('Мы загадали число меньше ' + stop,-1);
-        stop = getNum('Введите число от 1 до 10. Или 11 для выхода.',stop);
-	} 
-
- } while (!flag);
- 
+console.clear();
+var start = 4;
+var stop = prompt('Введите число от 1 до 10');
+	if (stop === null) {
+  	alert('Пока!');        
+    return;
+  }
+  stop = parseInt(stop);
+  console.log('stop = ',stop);
+  if (start === stop) {
+  	alert('Вы выиграли!');        
+  } else if (isNaN(stop) || stop < 1 || stop > 10) {
+  	alert('Вы ввели не корректое число');
+  } else if (start !== stop) {
+    alert('Вы проиграли! Мы загадали '+start);        
+  }
+  
 PRE JUNIOR
 
 1/*
@@ -63,55 +52,58 @@ PRE JUNIOR
 Если элементы массива what содержатся в массиве where, функция должна
 возвращать true иначе false. Пустой массив является подмножеством любого массива.
 */
-// порядок следования элементов в массивах не важен
 console.clear();
-var where = ["red", "green", "blue", "white", "green", "blue", "red"];
+// порядок следования элементов в массивах не важен
+var where = ["red", "green", "blue", "white", "green", "blue", "red", "yellow"];
 var what = ["blue", "green", "yellow"];
 
 function contains (what,where) {
-  var  wl = what.length;
-  
+  var  wl = what.length;  
+  function check(element, index, array) {
+  	return where.indexOf(element) !== -1;
+  }
   if (wl === 0) {
   	return true;
   }
-  
-  for (var i = 0; i < wl; i++) {
-    if (where.indexOf(what[i]) === -1) {
-      return false;
-    }    
+  if (where.length < wl) {
+  	return false;
   }
-  
-  return true;
+  return what.every(check);  
 }
-
 console.log('result = ', contains(what,where));
 
 2/*
 Создай функцию extractOddItems(arr) (время выполнения 15 - 45 минут)
- которая принимает аргументом массив или массивоподобный объект, и возвращает новый массив, в котором находятся только элементы с нечетным индексом.
+которая принимает аргументом массив или массивоподобный объект, и возвращает новый массив,
+в котором находятся только элементы с нечетным индексом.
 */
-????????????????????? массивоподобный обьект
+console.clear();
 var arr = [1,2,3,4,5,6,7];
 //var arr = '123456';
 
 function extractOddItems (arr) {
 	var i, l = arr.length,
-    	result = [];
-    for (i = 0; i < l; i++) {
-      if (i%2 === 0) {
-          continue;
-      }
-      result.push(arr[i]);
+  result = [];
+  for (i = 0; i < l; i++) {
+  	if (i%2 === 0) {
+      continue;
     }
-    return result;
+    result.push(arr[i]);
+  }
+  return result;
 }
 console.log('result = ', extractOddItems (arr));
 
 3 совпадает с 4
 4/*
 Написать функцию createObject(keys, values) (время выполнения 15 -45 минут)
-которая принимает аргументами 2 массива, и возвращает объект, название ключей которого которого - строки из массива keys, а значения - значения из массива values. Если ключей меньше, чем значений, игнорировать не вмещающиеся значения. Если ключей больше, чем значений, установить значения в undefined.
+которая принимает аргументами 2 массива, и возвращает объект,
+название ключей которого которого - строки из массива keys,
+а значения - значения из массива values.
+Если ключей меньше, чем значений, игнорировать не вмещающиеся значения.
+Если ключей больше, чем значений, установить значения в undefined.
 */
+console.clear();
 //var keys = ['1','2','3','4','5','6','7'];
 //var values = ['10','20','30','40','50','60','70'];
 
@@ -124,161 +116,294 @@ var values = ['10','20','30','40','50','60'];
 function createObject (keys, values) {
 	var i, l = keys.length,    	
     	result = {};
-    for (i = 0; i < l; i++) {
-    	result[keys[i]] = values[i];        
-    }
-    return result;
+  for (i = 0; i < l; i++) {
+  	result[keys[i]] = values[i];        
+  }
+  return result;
 }
 console.log('result = ', createObject (keys, values));
 
 5/*
 Дописать функцию toMatrix(data, rowSize), (время выполнения 15 -45  минут)
-которая принимает аргументом массив и число, возвращает новый массив. Число показывает количество элементов в подмассивах, элементы подмассивов берутся из массива data. Оригинальный массив не должен быть изменен.
+которая принимает аргументом массив и число, возвращает новый массив.
+Число показывает количество элементов в подмассивах, элементы подмассивов берутся из массива data.
+Оригинальный массив не должен быть изменен.
 */
+console.clear();
 var data = [1,2,3,4,5,6,7,8,9];
-var rowSize = 3;
+var rowSize = 2;
 
 function toMarix (data, rowSize) {
-	var j = 1, i, l = data.length, temp = []
-    	result = [];
-    for (i = 0; i < l; i++) {
-    	temp[j-1] = data[i];
-    	if (j == rowSize) {        	
-            result.push(temp);
-            j = 0;
-            temp = [];
-        }      	
-        j++;        
+  var j = 0, i, l = data.length, temp = []
+  result = [];      
+	for (i = 0; i < l; i++) {
+  	temp[j] = data[i];
+    j++;
+    if (j !== rowSize) {
+    	continue;
     }
-    if (temp.length > 0) result.push(temp);
-    return result;
+   	result.push(temp);
+    j = 0;
+    temp = [];
+  }
+  if (temp.length > 0) {
+  	result.push(temp);
+  }
+  return result;
 }
 console.log('result = ', toMarix (data, rowSize));
 
 6/*
 Написать функцию toQueryString(obj), (время выполнения 15 -45 минут)
-которая принимает аргументом объект. Значения в обьекте должны быть примитивами ( {page:1, search: ‘Paris’, …….}) и возвращает строку запроса вида page=1&search=Paris…….
+которая принимает аргументом объект.
+Значения в обьекте должны быть примитивами ( {page:1, search: ‘Paris’, …….})
+и возвращает строку запроса вида page=1&search=Paris…….
 */
+// еще подадим на вход разделитель || &
+console.clear();
 var obj = {1:10,2:20,3:30,4:40,5:50,6:60,7:70,8:80,9:90};
 
-function toQueryString (obj) {
-	var result = '';
-    for (var key in obj) {
-    	if (obj.hasOwnProperty(key)) {
-        	result += obj[key]+',';
-        }
-    }    
-    return result.substring(0,result.length-1);
+function toQueryString (obj, delimiter) {
+	var result = '',
+      del = delimiter || '&';
+  for (var key in obj) {
+  	if (obj.hasOwnProperty(key)) {
+     	result += key + '=' + obj[key] + del;
+    }
+  }    
+  return result.substring(0,result.length-1);
 }
 console.log('result = ', toQueryString (obj));
 
 7/*
 Написать функцию isInArray(), (время выполнения 15 -45 минут)
-которая принимает переменное количество аргументов. Возвращает true, если все аргументы, кроме последнего входят в последний. Последним всегда должен быть массив.
+которая принимает переменное количество аргументов.
+Возвращает true, если все аргументы, кроме последнего входят в последний.
+Последним всегда должен быть массив.
 */
 ??????????????? проверять ли типы входных аргументов
 // берем из  П.1
+console.clear();
 function contains (what,where) {
-	var i, l = where.length,
-    	j , wl = what.length,
-    	result = 1;
-    if (wl == 0) return true;
-    for (i = 0; i < l; i++) {
-    	if (where[i] == what[0]) {
-        	j = 1;
-            for (; j < wl; j++) {
-            	if (what[j] == where[i+j]) {
-                	result++;
-                } else {
-                	result = 1;
-                    i = i+j;
-                    break;
-                }
-            }
-            if (result == what.length) {
-            	console.log('i = ', i);
-            	return true;
-            }
-        }
-    }
-    return false;
+  var  wl = what.length;  
+  function check(element, index, array) {
+  	return where.indexOf(element) !== -1;
+  }
+  if (wl === 0) {
+  	return true;
+  }
+  if (where.length < wl) {
+  	return false;
+  }
+  return what.every(check);  
 }
+
 function isInArray () {
-    var i, l = arguments.length-1, what = [],
+	var i, l = arguments.length-1, what = [],
 	    where = arguments[l];
-	if (Object.prototype.toString.call(where) != '[object Array]') {
-    	return false;
+      
+	if (!(where instanceof Array)) {
+		return false;
 	}
-    
-    for (i=0; i<l; i++) {
-    	what.push(arguments[i]);
-    }
-    return contains (what,where);
+	// через var args = Array.prototype.pop.call(arguments); не рекомендует MDM
+ 	for (i = 0; i < l; i++) {
+  	what.push(arguments[i]);
+  }
+  return contains(what,where);
 }
 console.log('result = ', isInArray(1,2,3,4,5,[0,1,2,3,4,5,6,7,8,9]));
 
 8/*
 Написать функцию extend(), (время выполнения 15-45  минут)
-которая принимает аргументом любое количество объектов и возвращает новый объект, в котором собраны все свойства из переданных объектов. Значения имен свойств с одинаковым именем перезатираются в пользу тех, что встретились позже. Не используйте вложенные обьекты как значения. При выполнение не использовать никаких сторонних библиотек и  Object.assign
+которая принимает аргументом любое количество объектов и возвращает новый объект,
+в котором собраны все свойства из переданных объектов.
+Значения имен свойств с одинаковым именем перезатираются в пользу тех,
+что встретились позже. Не используйте вложенные обьекты как значения.
+При выполнение не использовать никаких сторонних библиотек и  Object.assign
 */
 ?????????? массив это обьект у которого имена ключей 0,1,2...
 ?????????? без рекурссии для вложеных обьектов
+console.clear();
 function extend () {
-    var i, l = arguments.length, arg,
+  var i, l = arguments.length, arg,
 	    key, obj = {};
         
-    for (i=0; i<l; i++) {
+	for (i = 0; i < l; i++) {
 		arg = arguments[i];
-        if (arg !== null && typeof arg === 'object') {
-        	for (key in arg) {
-            	obj[key] = arg[key];
-            }
-        }
+    if (arg === null && typeof arg !== 'object') {
+    	continue;
     }
-    return obj;
+    for (key in arg) {
+    	obj[key] = arg[key];
+    }
+  }
+  return obj;
 }
 console.log('result = ', extend(1,{1:10,2:20},[1,2,3,4,5],{3:30,2:40},'string',null,true));
 
 9/*
 Написать функцию every(arr, func), (время выполнения 15-45  минут) 
- которая принимает аргументами массив и функцию, вызывает для каждого элемента массива функцию с аргументами arr[i], i, arr. Если для каждого i-ого элемента массива func(arr[i], i, arr) вернула true, every должна вернуть true.
+которая принимает аргументами массив и функцию,
+вызывает для каждого элемента массива функцию с аргументами arr[i], i, arr.
+Если для каждого i-ого элемента массива func(arr[i], i, arr) вернула true, every должна вернуть true.
 */
 function test(value,index,array) {
-	console.log('arguments = ',arguments);
-    return (index%2==0);
+	return (index%2 === 0);
 }
+
 var arr = [1,2,3,4,5,6,7,8],
     func = test;
     
 function every (arr,func) {
-    var i, l = arr.length, result = true;
-        
-    for (i=0; i<l; i++) {
+	var i, l = arr.length, result = true;
+  for (i = 0; i < l; i++) {
 		result = func(arr[i],i,arr) && result;
-    }
-    return result;
+  }
+  return result;
 }
 console.log('result = ', every (arr,func));
 
 10/*
 Создай функцию с именем summ, (время выполнения 15 -45 минут)
-которая возвращает сумму всех передаваемых ей аргументов. Функция должна отрабатывать с любыми входящими данными. Функция должна всегда возвращать число.
+которая возвращает сумму всех передаваемых ей аргументов.
+Функция должна отрабатывать с любыми входящими данными.
+Функция должна всегда возвращать число.
 */
 function isNumeric(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
-    
+  
 function sum () {
-    var i, l = arguments.length,
-        arg, result = 0;
-        
-    for (i=0; i<l; i++) {
-    	arg = arguments[i];
-		if (isNumeric(arg)) {
-        	console.log('arg = ', arg);
-        	result += Number(arg);
-        }
+  var i, l = arguments.length,
+      arg, result = 0;
+       
+  for (i = 0; i < l; i++) {
+    arg = arguments[i];
+    if (isNumeric(arg)) {
+     	console.log('arg = ', arg);
+    	result += Number(arg);
     }
-    return result;
+   }
+   return result;
 }
 console.log('result = ', sum (1,2,3,[4,5,6],{a:7,b:8},'9.5','-9,89','str',false));
+
+11/*
+Напиши функцию parse(string),  (время выполнения 15-45  минут)
+которая принимает аргументом query string, и возвращает объект.
+Типы данных, которые должны распознаваться: строки, числа (только целые), булевы.
+*/
+console.clear();
+var str = 'page=1&search=Paris';
+
+function parse (string,delimiter) {
+	var i, l, arg = [],
+      del = delimiter || '&',
+      temp = [], obj = {};
+      
+	temp = string.split(del);
+	for (i = 0, l = temp.length; i < l; i++) {
+		arg = temp[i].split('=');
+   	obj[arg[0]] = arg[1];
+  }
+  return obj;
+}
+console.log('result = ', parse(str));
+
+12/*
+Написать функцию getUnique(arr), (время выполнения 15-45 минут)
+которая принимает аргументом массив или массивоподоный объект, и возвращает массив уникальных элементов.
+Аргумент не должен изменяться. Порядок элементов результирующего массива должен совпадать с порядком,
+в котором они встречаются в оригинальной структуре. Специально обрабатывать значение NaN не обязательно.
+*/
+console.clear();
+//var arr = [1,2,3,1,2,3,4,4,5,6,7,8,9,0];
+var arr = '1,2,3,1,2,3,4,4,5,6,7,8,9,0';
+
+function getUnique(arr) {
+	var i, l, result = [];
+	
+	for (i = 0, l = arr.length; i < l; i++) {
+		if (arr.indexOf(arr[i]) !== i) {
+    	continue;
+    }
+    result.push(arr[i]);
+  }
+  return result;
+}
+console.log('result = ',getUnique(arr));
+
+13/**/
+
+14/*
+Написать функцию createKeeper(), (время выполнения 15-45 минут)
+которая возвращает объект с 2 методами put(key, value) и get(key).
+Метод get(key) должен возвращать данные, которые были сохранены с помощью метода put,
+если вызывается с тем-же значением key, что и put.
+Ключами могут быть как объекты, так и примитивы, про NaN не задумываться.
+Если put был вызван с таким ключом, с которым уже был вызван ранее, старое значение перезатирается новым.
+Доступ к ключам и значениями должен быть возможен только через методы put и get.
+*/
+console.clear();
+
+function createKeeper() {
+	var keeper = {};   
+  return {
+  	put: function(key,value) {
+    	keeper[key] = value;
+    },
+    get: function(key) {
+    	return keeper[key];
+    }
+  };
+}
+
+var keep1 = createKeeper();
+var keep2 = createKeeper();
+keep1.put(1,1);
+keep1.put(1,3);
+keep2.put([2],{a:'b'});
+console.log('keep1 = ',keep1.get(1));
+console.log('keep2 = ',keep2.get([2]));
+
+15/*
+Написать функцию createSummator(initialValue), (время выполнения 15 - 45 минут)
+с опциональным первым параметром, который является точкой отчета счетчика.
+Если аргумент initialValue не передан, то отчет начинается с 0.
+При каждом вызове функция возвращает объект с методами inc(num), dec(num), get().
+Объектов, которые возвращает функция createSummator(initialValue), может быть любое количество. 
+Реализация должна позволять манипуляции со значением счетчика только с использованием этих методов.
+Вызов метода inc(num) увеличивает значение счетчика на значение аргумента num.
+Если метод вызван без аргумента, то значение счетчика увеличивается на 1.
+Вызов метода dec(num) уменьшает значение счетчика на значение num, если метод вызван с аргументом.
+Если метод вызван без аргумента, то значение счетчика уменьшается на 1 Вызов метода get() возвращает текущее значение счетчика.
+*/
+console.clear();
+
+function createSummator(initialValue) {
+	var counter = (initialValue || 0);
+  
+  return {
+  	inc: function(num) {
+    	counter += (num || 1);
+    },
+    
+    dec: function(num) {
+    	counter -= (num || 1);
+    },
+    
+    get: function() {
+    	return counter;
+    }
+    
+  };
+}
+
+var cc1 = createSummator();
+var cc2 = createSummator(5);
+cc1.inc();
+cc1.inc(5);
+cc2.dec(3);
+cc2.inc(2);
+console.log('cc1 = ',cc1.get());
+console.log('cc2 = ',cc2.get());
