@@ -167,9 +167,10 @@ function toQueryString (obj, delimiter) {
 	var result = '',
       del = delimiter || '&';
   for (var key in obj) {
-  	if (obj.hasOwnProperty(key)) {
-     	result += key + '=' + obj[key] + del;
+  	if (!obj.hasOwnProperty(key)) {
+     	continue;
     }
+    result += key + '=' + obj[key] + del;
   }    
   return result.substring(0,result.length-1);
 }
@@ -279,10 +280,10 @@ function sum () {
        
   for (i = 0; i < l; i++) {
     arg = arguments[i];
-    if (isNumeric(arg)) {
-     	console.log('arg = ', arg);
-    	result += Number(arg);
+    if (!(isNumeric(arg))) {
+     	continue;    	
     }
+    result += Number(arg);
    }
    return result;
 }
@@ -333,7 +334,14 @@ function getUnique(arr) {
 }
 console.log('result = ',getUnique(arr));
 
-13/**/
+13/*
+Написать функцию createCachable(func), (время выполнения 15- 45 минут)
+принимающую аргументом функцию. createCachable(func) возвращает новую функцию,
+которая возвращает результат вызова func и запоминает его,
+или возвращает уже запомненный результат для текущего аргумента.
+Функция func может иметь только один аргумент. 
+createCachable(func) может создавать какое угодно количество кешированных версий функций.
+*/
 
 14/*
 Написать функцию createKeeper(), (время выполнения 15-45 минут)
