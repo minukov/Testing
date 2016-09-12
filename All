@@ -421,7 +421,7 @@ JUNIOR
 1/**/
 2/**/
 3/**/
-4/**/
+4/*https://learn.javascript.ru/event-delegation*/
 A/*
 Создайте дерево, которое по клику на заголовок скрывает-показывает детей  (время выполнения 1 часа)
 Требования:
@@ -429,11 +429,237 @@ A/*
 Клик вне текста заголовка (на пустом месте) ничего делать не должен.
 При наведении на заголовок — он становится жирным, реализовать через CSS.
 При двойном клике на заголовке, его текст не должен выделяться.
+http://plnkr.co/edit/62Z7toAcJGiLk95mBtUQ?p=preview
 */
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <style>
+    .tree span:hover {
+      font-weight: bold;
+    }
+
+    .tree span {
+      cursor: pointer;
+    }
+  </style>
+  <meta charset="utf-8">
+</head>
+
+<body>
+
+  <ul class="tree">
+    <li>Животные
+      <ul>
+        <li>Млекопитающие
+          <ul>
+            <li>Коровы</li>
+            <li>Ослы</li>
+            <li>Собаки</li>
+            <li>Тигры</li>
+          </ul>
+        </li>
+        <li>Другие
+          <ul>
+            <li>Змеи</li>
+            <li>Птицы</li>
+            <li>Ящерицы</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Рыбы
+      <ul>
+        <li>Аквариумные
+          <ul>
+            <li>Гуппи</li>
+            <li>Скалярии</li>
+          </ul>
+
+        </li>
+        <li>Морские
+          <ul>
+            <li>Морская форель</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <script>
+    var tree = document.getElementsByTagName('ul')[0];
+
+    var treeLis = tree.getElementsByTagName('li');
+
+    /* wrap all textNodes into spans */
+    for (var i = 0; i < treeLis.length; i++) {
+      var li = treeLis[i];
+
+      var span = document.createElement('span');
+      li.insertBefore(span, li.firstChild);
+      span.appendChild(span.nextSibling);
+    }
+
+    /* catch clicks on whole tree */
+    tree.onclick = function(event) {
+      var target = event.target;
+
+      if (target.tagName != 'SPAN') {
+        return;
+      }
+
+      /* now we know the SPAN is clicked */
+      var childrenContainer = target.parentNode.getElementsByTagName('ul')[0];
+      if (!childrenContainer) return; // no children
+
+      childrenContainer.hidden = !childrenContainer.hidden;
+    }
+    
+    tree.ondblclick = function(event) {
+      if (window.getSelection)
+        window.getSelection().removeAllRanges();
+       else if (document.selection)
+        document.selection.empty();
+    }
+    
+  </script>
+
+</body>
+
+</html>
 B/*
 Сделать сортировку таблицы при клике на заголовок.
 Требования:
 Использовать делегирование.
 Код не должен меняться при увеличении количества столбцов или строк.
-*/
+http://plnkr.co/edit/im9GDgRDAHMGORMXeSvU?p=preview
 https://learn.javascript.ru/task/sort-table (http://plnkr.co/edit/im9GDgRDAHMGORMXeSvU?p=preview)
+*/
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    th {
+      cursor: pointer;
+    }
+
+    th:hover {
+      background: yellow;
+    }
+  </style>
+</head>
+
+<body>
+
+  <table id="grid">
+    <thead>
+      <tr>
+        <th data-type="number">Возраст </th>
+        <th data-type="string">Имя</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>5</td>
+        <td>Вася</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Петя</td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td>Женя</td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td>Маша</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Илья</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    // сортировка таблицы
+    // использовать делегирование!
+    // должно быть масштабируемо:
+    // код работает без изменений при добавлении новых столбцов и строк
+
+    var grid = document.getElementById('grid');
+
+    grid.onclick = function(e) {
+      var target = e.target, typeSort;
+      
+      if (target.tagName != 'TH') return;
+
+      // Если TH -- сортируем
+      typeSort = sortGrid(target.cellIndex, target.getAttribute('data-type'), target.getAttribute('data-sort'));
+      target.setAttribute('data-sort',typeSort);
+      setArrow(target.cellIndex, typeSort);
+      
+    };
+    
+    function setArrow (index, sort) {
+      var arrow = (sort === 'asc') ? ' &#8593;' : ' &#8595;';
+      var th = grid.getElementsByTagName('th');
+      var thArray = [].slice.call(th), text;
+      for (var i = 0, l = thArray.length; i < l; i++) {
+        text = thArray[i].innerHTML.split(' ')[0];
+        if (i === index) {
+          text =  text + arrow;
+        }
+        thArray[i].innerHTML = text;
+      }
+    }
+
+    function sortGrid(colNum, type, sort) {
+      var tbody = grid.getElementsByTagName('tbody')[0];
+
+      // Составить массив из TR
+      var rowsArray = [].slice.call(tbody.rows);
+
+      // определить функцию сравнения, в зависимости от типа
+      var compare;
+      var sortType = (sort === 'asc') ? 'desc': 'asc';
+      console.log('sortType = ',sortType);
+      switch (type) {
+        case 'number':
+          compare = function(rowA, rowB) {
+            return (sortType === 'asc') ? (rowA.cells[colNum].innerHTML - rowB.cells[colNum].innerHTML):(rowB.cells[colNum].innerHTML - rowA.cells[colNum].innerHTML);
+          };
+          break;
+        case 'string':
+          compare = function(rowA, rowB) {
+            return (sortType === 'asc') ? (rowA.cells[colNum].innerHTML > rowB.cells[colNum].innerHTML ? 1 : -1):(rowA.cells[colNum].innerHTML < rowB.cells[colNum].innerHTML ? 1 : -1);
+          };
+          break;
+      }
+
+      // сортировать
+      rowsArray.sort(compare);
+
+      // Убрать tbody из большого DOM документа для лучшей производительности
+      grid.removeChild(tbody);
+
+      // добавить результат в нужном порядке в TBODY
+      // они автоматически будут убраны со старых мест и вставлены в правильном порядке
+      for (var i = 0; i < rowsArray.length; i++) {
+        tbody.appendChild(rowsArray[i]);
+      }
+
+      grid.appendChild(tbody);
+      
+      return sortType;
+
+    }
+  </script>
+
+</body>
+
+</html>
