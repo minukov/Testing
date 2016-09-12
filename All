@@ -445,7 +445,7 @@ console.log('cc2 = ',cc2.get());
 </head>
 
 <body>
-  <div>
+  <div class = "test">
      <!-- This is a comment -->
     <p>This is a text.</p>
    
@@ -459,13 +459,15 @@ console.log('cc2 = ',cc2.get());
 <script>
 
 var div = document.getElementsByTagName('div')[0];
+var li = document.getElementsByTagName('li')[0];
+
 //console.log('div = ',div);
 //console.log('div = ',getClasses(div));
 //console.log('next = ',next(div));
 
 //console.log('div = ',addClass(div,'test2'));
 //console.log('div = ',hasClass(div,'test2'));
-console.log('div = ',removeClass(div,'test'));
+console.log('papa = ',closest(li, testFunc));
 
 function next(node) {
   var next;
@@ -480,7 +482,6 @@ function next(node) {
   }
   return next;
 }
-
 
 function getClasses (node) {
   return node.className.split(" ");
@@ -512,6 +513,19 @@ function removeClass(node, classToRemove) {
     }
   }
   //return node.className;
+}
+
+function testFunc (node) {
+  return hasClass(node,'test');
+}
+
+function closest(node, testFunc) {
+   var parent = node.parentNode;
+   if (testFunc(parent)) {
+     return parent;
+   } else {
+     return closest(parent,testFunc);
+   }
 }
 
 </script>
