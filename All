@@ -458,25 +458,62 @@ console.log('cc2 = ',cc2.get());
 
 <script>
 
-	var div = document.getElementsByTagName('div')[0];
-	console.log('div = ',div);
+var div = document.getElementsByTagName('div')[0];
+//console.log('div = ',div);
+//console.log('div = ',getClasses(div));
+//console.log('next = ',next(div));
 
-	console.log('next = ',next(div));
+//console.log('div = ',addClass(div,'test2'));
+//console.log('div = ',hasClass(div,'test2'));
+console.log('div = ',removeClass(div,'test'));
 
-	function next(node) {
-  	var next;
-  	//new
-  	next = node.firstElementChild;
-  	//old
-  	var children = Array.prototype.slice.call(node.childNodes);
-  	for (var i = 0, l = children.length; i < l; i++) {
-  	  if (children[i].tagName !== undefined) {
-	      return children[i];
-    	}
-  	}
-  	return next;
-	}
-	
+function next(node) {
+  var next;
+  //new
+  next = node.firstElementChild;
+  //old
+  var children = Array.prototype.slice.call(node.childNodes);
+  for (var i = 0, l = children.length; i < l; i++) {
+    if (children[i].tagName !== undefined) {
+      return children[i];
+    }
+  }
+  return next;
+}
+
+
+function getClasses (node) {
+  return node.className.split(" ");
+}
+
+function hasClass(node, classToCheck) {
+  var classes = getClasses(node);
+  return (classes.indexOf(classToCheck) !== -1);
+}
+
+function addClass(node, classToAdd) {
+  if (hasClass(node,classToAdd)) return;
+  node.className += ' ' + classToAdd;
+  //return node.className;
+}
+
+function removeClass(node, classToRemove) {
+  var classes;
+  if (!hasClass(node,classToRemove)) return;
+  classes = getClasses(node);
+  var i = 0, l = classes.length;
+  if (l > 1) {
+    node.className = '';
+    for (; i < l; i++) {
+      if (classes[i] === classToRemove) {
+        continue;
+      }
+      node.className += ' ' + classes[i];
+    }
+  }
+  //return node.className;
+}
+
 </script>
 
 </body>
