@@ -419,15 +419,15 @@ console.log('cc2 = ',cc2.get());
 
 Взаимодействие с DOM
 /*
-	Реализовать функцию next(node), (время выполнения 15 - 45 минут)
+	1.Реализовать функцию next(node), (время выполнения 15 - 45 минут)
 которая вернет следующий узел, не учитывая текстовые узлы и узлы комментариев.
-	Реализовать функцию addClass(node, classToAdd). (время выполнения 15 - 45минут)
+	2.Реализовать функцию addClass(node, classToAdd). (время выполнения 15 - 45минут)
 Класс не должен добавляться, если у элемента уже есть такой.
-	Реализовать функцию removeClass(node, classToRemove). (время выполнения 15 - 45 минут)
+	3.Реализовать функцию removeClass(node, classToRemove). (время выполнения 15 - 45 минут)
 Удаление несуществующего класса не должно приводить к ошибке. Если классов несколько, должны быть удалены все.
-	Реализовать функцию hasClass(node, classToCheck), (время выполнения 15 - 45 минут)
+	4.Реализовать функцию hasClass(node, classToCheck), (время выполнения 15 - 45 минут)
 которая вернет true, если у node есть класс classToCheck
-	Реализовать функцию closest(node, testFunc), (время выполнения 15 - 45 минут)
+	5.Реализовать функцию closest(node, testFunc), (время выполнения 15 - 45 минут)
 которая вернет первого родителя, для которого testFunc вернет true. В testFunc получает аргументом DOM узел.
 Сам DOM узел node тоже 
 */
@@ -532,6 +532,74 @@ function closest(node, testFunc) {
 
 </body>
 </html>
+
+6/*
+Дан список сообщений.  (время выполнения 15 - 45 минут)
+Добавьте каждому сообщению кнопку для его удаления. Используйте делегирование событий. Один обработчик для всего.
+*/
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    test {
+      background: yellow;
+    }
+  </style>
+</head>
+
+<body>
+  <input type = 'button' value = "Init" onclick = "init()"></input>
+  <table id="grid">
+    <tbody></tbody>
+  </table>
+  
+<script>
+console.clear();
+var array = [
+    'Событие 1',
+    'Событие 2',
+    'Событие 3',
+    'Событие 4',
+    'Событие 5'
+  ];
+  
+var row, cell1,cell2,input;  
+var i, l = array.length;
+  
+var grid = document.getElementById('grid');
+
+grid.onclick = function(e) {
+  if (e.target.tagName !== 'INPUT') return;
+//  console.log (e.target.parentNode.parentNode.rowIndex);
+  var indx = e.target.parentNode.parentNode.rowIndex;
+  grid.deleteRow(indx);
+};
+
+
+function init () {
+ // console.log('fc = ',grid.firstElementChild);
+  if (grid.firstElementChild.firstElementChild === null) {
+    for (i = l-1; i >= 0; i--) {
+      row = grid.insertRow(0);
+      cell1 = row.insertCell(0);
+      cell2 = row.insertCell(1);
+      cell1.innerHTML = array[i];
+      input = document.createElement('input');
+      input.setAttribute('type','button');
+      input.setAttribute('value','X');
+      cell2.appendChild(input);
+    }
+  }
+}
+
+</script>
+
+</body>
+
+</html>
+
 
 
 JUNIOR
