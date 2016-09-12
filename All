@@ -416,6 +416,73 @@ cc2.inc(2);
 console.log('cc1 = ',cc1.get());
 console.log('cc2 = ',cc2.get());
 
+
+Взаимодействие с DOM
+/*
+	Реализовать функцию next(node), (время выполнения 15 - 45 минут)
+которая вернет следующий узел, не учитывая текстовые узлы и узлы комментариев.
+	Реализовать функцию addClass(node, classToAdd). (время выполнения 15 - 45минут)
+Класс не должен добавляться, если у элемента уже есть такой.
+	Реализовать функцию removeClass(node, classToRemove). (время выполнения 15 - 45 минут)
+Удаление несуществующего класса не должно приводить к ошибке. Если классов несколько, должны быть удалены все.
+	Реализовать функцию hasClass(node, classToCheck), (время выполнения 15 - 45 минут)
+которая вернет true, если у node есть класс classToCheck
+	Реализовать функцию closest(node, testFunc), (время выполнения 15 - 45 минут)
+которая вернет первого родителя, для которого testFunc вернет true. В testFunc получает аргументом DOM узел.
+Сам DOM узел node тоже 
+*/
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    test {
+      background: yellow;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+     <!-- This is a comment -->
+    <p>This is a text.</p>
+   
+    <p>This is a paragraph.</p>
+    <!-- Comments are not displayed in the browser -->
+    <ul>
+      <li>Информация</li>
+    </ul>
+  </div>
+
+<script>
+
+	var div = document.getElementsByTagName('div')[0];
+	console.log('div = ',div);
+
+	console.log('next = ',next(div));
+
+	function next(node) {
+  	var next;
+  	//new
+  	next = node.firstElementChild;
+  	//old
+  	var children = Array.prototype.slice.call(node.childNodes);
+  	for (var i = 0, l = children.length; i < l; i++) {
+  	  if (children[i].tagName !== undefined) {
+	      return children[i];
+    	}
+  	}
+  	return next;
+	}
+	
+</script>
+
+</body>
+</html>
+
+
 JUNIOR
 
 1/**/
