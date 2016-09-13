@@ -1,0 +1,8 @@
+div {
+    cursor: pointer;
+    border:1px solid black;
+}
+
+div:hover {
+    background: yellow;
+}
