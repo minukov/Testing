@@ -849,3 +849,221 @@ https://learn.javascript.ru/task/sort-table (http://plnkr.co/edit/im9GDgRDAHMGOR
 </body>
 
 </html>
+5/**/
+6/*
+Реализовать виджет "секундомер". (время выполнения 2 часа)
+Кнопки "стоп", "старт" (одна и та же кнопка), "сброс", "круг". Секундомер работает с точностью до миллисекунд. 
+Когда он запущен, показывается время в формате чч:мм:сс:мс. Нули разрядов не показывать. 
+Нажатие на кнопку "стоп" останавливает ход секундомера. 
+Кнопка "круг" добавляет текущее значение секундомера в список результатов. 
+Элементы из списка результатов можно удалять поштучно. Кнопка "сброс" останавливает секнудомер, 
+если тот бежит, сбрасывает значение в нули, убирает все результаты, если такие есть.
+Управление с клавиатуры (проверьте, чтобы работало в разных расскладках): s - start/stop, l - lap, r - reset.
+Если на странице несколько секундомеров, с клавиатуры управляется тот, над последним из которых находилась мышка.
+*/
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+   <!-- <link rel="stylesheet" href="style.css"> -->
+   <!-- <script src="script.js"></script> -->l
+    <style>
+      div {
+        cursor: pointer;
+        border:1px solid black;
+      }
+  
+      div:hover {
+        background: yellow;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id = 1 class="stopwatch"></div>
+    <div id = 2 class="stopwatch"></div>
+    <div id = 3 class="stopwatch"></div>
+    <table id="grid">
+      <thead>
+        <tr>
+          <th data-type="number">Таймер </th>
+          <th data-type="string">Время</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+    
+      
+<script>
+
+var Stopwatch = function(elem, options) {
+
+  var timer       = createTimer(),
+      startButton = createButton("start/stop", startStop),
+      resetButton = createButton("reset", reset),
+      lapButton = createButton("lap", lap),
+      id = elem.id,
+      offset,
+      clock,
+      interval;
+
+  // default options
+  options = options || {};
+  options.delay = options.delay || 1;
+
+  // append elements     
+  elem.appendChild(timer);
+  elem.appendChild(startButton);
+  elem.appendChild(lapButton);
+  elem.appendChild(resetButton);
+
+  // initialize
+  reset();
+
+  // private functions
+  function createTimer() {
+    return  document.createElement("h1");
+  }
+
+  function createButton(action, handler) {
+    var input = document.createElement('input');
+    input.setAttribute('type','button');
+    input.setAttribute('value',action);
+    input.setAttribute('action',handler);
+    input.addEventListener("click", function(event) {
+      handler(event);
+      event.preventDefault();
+    });
+    return input;        
+  }
+
+  function startStop (e) {
+    var action = e.target.getAttribute('action');
+    if (action === 'stop') {
+      e.target.setAttribute('action','start');
+      stop();
+    } else {
+      e.target.setAttribute('action','stop');
+      start();
+    }
+  }
+
+  function start() {
+    if (!interval) {
+      interval = setInterval(update, options.delay);
+    }
+  }
+
+  function stop() {
+    if (interval) {
+      clearInterval(interval);
+      interval = null;
+    }
+  }
+
+  function reset() {
+    var grid = document.getElementById('grid');
+    var tbody = grid.getElementsByTagName('tbody')[0];
+    var ntbody = document.createElement('tbody');
+    grid.replaceChild(ntbody,tbody);
+    clock = 0;
+    render();
+  }
+
+  function update() {
+    clock += options.delay; //delta();
+    render();
+  }
+
+  function render() {
+    timer.innerHTML = formaTime(clock); 
+  }
+
+  function formaTime (clock) {
+    if (clock === 0) {
+      return '00:00:00:00';
+    }
+    else {
+      var h = m = s = ms = 0;
+	    var newTime = '', time = clock;
+      h = Math.floor( time / (60 * 60 * 1000) );
+	    time = time % (60 * 60 * 1000);
+	    m = Math.floor( time / (60 * 1000) );
+	    time = time % (60 * 1000);
+	    s = Math.floor( time / 1000 );
+	    ms = time % 1000;
+	    newTime = h + ':' + m + ':' + s + ':' + (ms/10).toFixed();
+      return newTime;
+    }
+  }
+
+  function lap () {
+    var grid = document.getElementById('grid');
+    var tbody = grid.getElementsByTagName('tbody')[0];
+    var row, cell, input;
+     
+    row = document.createElement('tr');
+    cell = document.createElement('td');
+    input = document.createTextNode(id);
+    cell.appendChild(input);
+    row.appendChild(cell);
+
+    cell = document.createElement('td');
+    input = document.createTextNode(formaTime (clock));
+    cell.appendChild(input);
+    row.appendChild(cell);
+
+    cell = document.createElement('td');
+    input = document.createElement('input');
+    input.setAttribute('type','button');
+    input.setAttribute('value','X');
+    cell.appendChild(input);
+    row.appendChild(cell);
+    
+    tbody.appendChild(row);
+  }
+
+   
+  // public API
+  this.start  = start;
+  this.stop   = stop;
+  this.reset  = reset;
+  this.lap    = lap;
+};
+     
+console.clear();   
+
+document.addEventListener("keydown", keyPress, false);
+
+function keyPress(e) {
+  var keyCode = e.keyCode;
+  console.log('keyCode = ',e);
+  switch (keyCode) {
+    
+  }
+}
+
+var grid = document.getElementById('grid');
+
+grid.onclick = function(e) {
+  if (e.target.tagName !== 'INPUT') return;
+  var indx = e.target.parentNode.parentNode.rowIndex;
+  grid.deleteRow(indx);
+};
+
+
+var elems = document.getElementsByClassName("stopwatch");
+var stops = [];
+for (var i=0, len=elems.length; i<len; i++) {
+  stops[i] = new Stopwatch(elems[i],{delay:0});
+}
+
+
+
+    </script>
+    
+  </body>
+
+</html>
