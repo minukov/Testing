@@ -861,13 +861,12 @@ https://learn.javascript.ru/task/sort-table (http://plnkr.co/edit/im9GDgRDAHMGOR
 Управление с клавиатуры (проверьте, чтобы работало в разных расскладках): s - start/stop, l - lap, r - reset.
 Если на странице несколько секундомеров, с клавиатуры управляется тот, над последним из которых находилась мышка.
 */
-
 <!DOCTYPE html>
 <html>
 
   <head>
    <!-- <link rel="stylesheet" href="style.css"> -->
-   <!-- <script src="script.js"></script> -->l
+   <!-- <script src="script.js"></script> -->
     <style>
       div {
         cursor: pointer;
@@ -912,7 +911,7 @@ var Stopwatch = function(elem, options) {
   // default options
   options = options || {};
   options.delay = options.delay || 1;
-
+  startButton.setAttribute('id','ss');
   // append elements     
   elem.appendChild(timer);
   elem.appendChild(startButton);
@@ -944,23 +943,26 @@ var Stopwatch = function(elem, options) {
     if (action === 'stop') {
       e.target.setAttribute('action','start');
       stop();
-    } else {
-      e.target.setAttribute('action','stop');
-      start();
+      return;
     }
+    e.target.setAttribute('action','stop');
+    start();
+    
   }
 
   function start() {
-    if (!interval) {
-      interval = setInterval(update, options.delay);
+    if (interval) {
+      return;
     }
+    interval = setInterval(update, options.delay);
   }
 
   function stop() {
-    if (interval) {
-      clearInterval(interval);
-      interval = null;
+    if (!interval) {
+      return;
     }
+    clearInterval(interval);
+    interval = null;
   }
 
   function reset() {
@@ -985,18 +987,16 @@ var Stopwatch = function(elem, options) {
     if (clock === 0) {
       return '00:00:00:00';
     }
-    else {
-      var h = m = s = ms = 0;
-	    var newTime = '', time = clock;
-      h = Math.floor( time / (60 * 60 * 1000) );
-	    time = time % (60 * 60 * 1000);
-	    m = Math.floor( time / (60 * 1000) );
-	    time = time % (60 * 1000);
-	    s = Math.floor( time / 1000 );
-	    ms = time % 1000;
-	    newTime = h + ':' + m + ':' + s + ':' + (ms/10).toFixed();
-      return newTime;
-    }
+    var h = m = s = ms = 0;
+	  var newTime = '', time = clock;
+    h = Math.floor( time / (60 * 60 * 1000) );
+	  time = time % (60 * 60 * 1000);
+	  m = Math.floor( time / (60 * 1000) );
+	  time = time % (60 * 1000);
+	  s = Math.floor( time / 1000 );
+	  ms = time % 1000;
+	  newTime = h + ':' + m + ':' + s + ':' + (ms/10).toFixed();
+    return newTime;
   }
 
   function lap () {
@@ -1031,6 +1031,7 @@ var Stopwatch = function(elem, options) {
   this.stop   = stop;
   this.reset  = reset;
   this.lap    = lap;
+  this.startStop = startStop;
 };
      
 console.clear();   
@@ -1038,29 +1039,47 @@ console.clear();
 document.addEventListener("keydown", keyPress, false);
 
 function keyPress(e) {
-  var keyCode = e.keyCode;
-  console.log('keyCode = ',e);
+  var elem = div || document.getElementsByClassName("stopwatch")[0];
+  if (!elem) {return;}
+  var keyCode = e.keyCode,
+      stop = stops[elem.id-1];
   switch (keyCode) {
-    
+    case 83 : 
+      var btn, btns = elem.getElementsByTagName('INPUT');
+      for (var i=0,l=btns.length;i<l;i++) {
+        if (btns[i].value !== 'start/stop') {
+          continue;
+        }
+        btn = btns[i];
+      }
+      stop.startStop({target:btn});
+      break;
+    case 82 : 
+      stop.reset();
+      break;
+    case 76 : 
+      stop.lap();
+      break;
   }
 }
 
 var grid = document.getElementById('grid');
-
 grid.onclick = function(e) {
   if (e.target.tagName !== 'INPUT') return;
   var indx = e.target.parentNode.parentNode.rowIndex;
   grid.deleteRow(indx);
 };
 
-
 var elems = document.getElementsByClassName("stopwatch");
-var stops = [];
+var stops = [], div;
 for (var i=0, len=elems.length; i<len; i++) {
+  elems[i].onmouseover = function(e) {
+    if (e.target.tagName !== 'DIV') return;
+    div = e.target;
+    console.log(e);
+  };
   stops[i] = new Stopwatch(elems[i],{delay:0});
 }
-
-
 
     </script>
     
