@@ -1,0 +1,11 @@
+span {
+    border:1px solid black;
+}
+
+span:hover {
+    background: yellow;
+}
+
+input, span {
+    margin-right:10px;
+}
