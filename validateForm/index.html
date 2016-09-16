@@ -1,1 +1,41 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <title>validateForm</title>
+</head>
+<body>
+<form name="testForm" action="\validateForm\index.html" method="post">
+    <div class="required">
+        <label for="login">Login</label>
+        <input type="text" id="login" pattern="^[ 0-9]+$">
+    </div>
+    <div class="required">
+        <label for="email">Email</label>
+        <input data-type="email" type="text" id="email">
+    </div>
+    <div class="required">
+        <label for="pass">Password</label>
+        <input data-type="pass" type="text" id="pass">
+    </div>
+    <div class="required">
+        <label for="conf">Confirm</label>
+        <input data-type="conf" type="text" id="conf">
+    </div>
+    <div>
+        <label for="comment">Comment</label>
+        <input type="text" id="comment">
+    </div>
+    <div class="required">
+        <label for="check">I agree</label>
+        <input type="checkbox" id="check">
+    </div>
+    <div class="button">
+        <button>Submit</button>
+    </div>
+</form>
+<script src="script.js"></script>
+</body>
+</html>
