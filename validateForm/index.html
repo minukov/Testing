@@ -9,20 +9,20 @@
 <body>
 <form name="testForm" action="\validateForm\index.html" method="post">
     <div class="required">
-        <label for="login">Login</label>
-        <input type="text" id="login" pattern="^[ 0-9]+$">
+        <label for="login" class="control-label">Login</label>
+        <input type="text" id="login">
     </div>
     <div class="required">
-        <label for="email">Email</label>
+        <label for="email" class="control-label">Email</label>
         <input data-type="email" type="text" id="email">
     </div>
     <div class="required">
-        <label for="pass">Password</label>
-        <input data-type="pass" type="text" id="pass">
+        <label for="pass" class="control-label">Password</label>
+        <input data-type="pass" type="password" id="pass">
     </div>
     <div class="required">
-        <label for="conf">Confirm</label>
-        <input data-type="conf" type="text" id="conf">
+        <label for="conf" class="control-label">Confirm</label>
+        <input data-type="conf" type="password" id="conf">
     </div>
     <div>
         <label for="comment">Comment</label>
@@ -30,11 +30,15 @@
     </div>
     <div class="required">
         <label for="check">I agree</label>
-        <input type="checkbox" id="check">
+        <input data-type="check" type="checkbox" id="check">
+    </div>
+    <div>
+        <span> * Обязательны для заполнения</span>
     </div>
     <div class="button">
-        <button>Submit</button>
+        <button disabled="true">Submit</button>
     </div>
+
 </form>
 <script src="script.js"></script>
 </body>

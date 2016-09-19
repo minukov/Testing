@@ -19,7 +19,7 @@ label {
     text-align: right;
 }
 
-input[type="text"] {
+input[type="text"], input[type="password"]{
     /* To make sure that all text fields have the same font settings
        By default, textareas have a monospace font */
     font: 1em sans-serif;
@@ -47,4 +47,13 @@ button {
 div.required label.control-label:after {
     content: " * ";
     color: red;
+}
+
+span {
+    /*display: none;*/
+    color:  red;
+}
+
+.inv {
+    border: 2px solid red !important;
 }
