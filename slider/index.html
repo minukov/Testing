@@ -8,39 +8,21 @@
 </head>
 <body>
 
-<div id="s1" class="slider">
-    <div class="gallery">
-        <a class="left"></a>
-        <a class="right"></a>
-        <div class="indicator">
-            <span data-id="1" class="white"></span>
-            <span data-id="2"></span>
-            <span data-id="3"></span>
-            <span data-id="4"></span>
-        </div>
-        <img class="active" src="bt.jpg">
-        <img src="win.jpg">
-        <img src="rd.jpg">
-        <img src="pink.jpg">
-    </div>
-</div>
+<div id="s1" class="slider"
+     data-config='{
+                   "maxImgWidth": "1024px",
+                   "selectedIndex" : 2,
+                   "slideDelay": 3000,
+                   "startDelay" : 7000,
+                   "imgs" : ["bt.jpg","win.jpg","rd.jpg","pink.jpg"]
+                  }'
+></div>
+
 <br>
-<div id="s2" class="slider">
-    <div class="gallery">
-        <a class="left"></a>
-        <a class="right"></a>
-        <div class="indicator">
-            <span data-id="1" class="white"></span>
-            <span data-id="2"></span>
-            <span data-id="3"></span>
-            <span data-id="4"></span>
-        </div>
-        <img class="active" src="bt.jpg">
-        <img src="win.jpg">
-        <img src="rd.jpg">
-        <img src="pink.jpg">
-    </div>
-</div>
+
+<div id="s2" class="slider"
+     data-config='{"imgs" : ["rd.jpg","pink.jpg"]}'
+></div>
 
 <script src="script.js"></script>
 </body>
