@@ -11,15 +11,21 @@
 //  Функция func может иметь только один аргумент.
 //  createCachable(func) может создавать какое угодно количество кешированных версий функций.
 
-function createCachable(func, arg) {
-    var cache = {},
-        key = typeof arg + '|' + arg + '|' + func.name;
-    if (!cache[key]) {
-        cache[key] = func(arg);
+function createCachable(func) {
+    var cache = {};
+    return function (arg) {
+        if (!arg || !arg.name) {
+            return;
+        }
+        var key = arg.name;
+        if (!(key in cache)) {
+            cache[key] = arg();
+        }
+        return cache[key];
     }
-    return cache[key];
 }
 
+//
 // function test(arg) {
 //     console.log('arg = ', arg);
 //     return arg;

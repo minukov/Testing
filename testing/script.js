@@ -20,7 +20,7 @@ var result;
 //2
 // var arr = [1,2,3,4,5,6,7];
 // result = extractOddItems(arr);
-//3
+//3, 4
 // var keys = ['1', '2', '3', '4', '5', '6', '7'];
 // var values = ['10', '20', '30', '40', '50', '60'];
 // result = createObject(keys, values);
@@ -50,20 +50,28 @@ var result;
 // var arr = [1, 2, 3, 1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 0];
 // result = getUnique(arr);
 //13
-// function test(arg) {
-//     console.log('arg = ', arg);
-//     return arg;
+// function test() {
+//     console.log('test');
+//     return 1;
 // }
 //
-// function test(arg) {
-//     console.log('arg = ', arg);
-//     return arg + 1;
+// var t1 = function () {
+//     console.log('t1');
+//     return 2;
 // }
 //
-// console.log('createCachable = ', createCachable(test, 1));
-// console.log('createCachable = ', createCachable(test, 2));
-// console.log('createCachable = ', createCachable(test, 2));
-// console.log('createCachable = ', createCachable(test, '2'));
+// var cc = createCachable();
+// console.log('cc = ', cc());
+//
+// console.log('cc = ', cc(t1));
+// console.log('cc = ', cc(t1));
+//
+// console.log('cc = ', cc(test));
+// console.log('cc = ', cc(test));
+// console.log('cc = ', cc(test));
+//
+// console.log('createCachable = ', cc(t1));
+
 //14
 // var keep1 = createKeeper();
 // var keep2 = createKeeper();
@@ -82,4 +90,13 @@ var result;
 // console.log('cc1 = ',cc1.get());
 // console.log('cc2 = ',cc2.get());
 
-console.log('result = ', result);
+console.log("result = ", result);
+
+// var zero = parseInt('qwwwe',10);
+// //console.log("zero = ",zero);
+// if (!zero) {
+//     console.log("zero = ",zero);
+// }
+//
+// let x=1, y=2;
+// console.log(let (x=x+1,y=x+2) x+y);
